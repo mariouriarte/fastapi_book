@@ -1,0 +1,39 @@
+# Byte-code files
+__pycache__/
+*.py[cod]
+
+# Virtual environment
+venv/
+env/
+.venv/
+.env
+
+# Built distributions and packaging
+.Python
+build/
+dist/
+wheels/
+*.egg-info/
+
+# Development environments (optional, uncomment as needed)
+# IDEs and editors:
+# .idea/  # uncomment to ignore PyCharm project files
+# .vscode/ # uncomment to ignore VS Code settings
+
+# OS-generated files
+.DS_Store # macOS
+Thumbs.db # Windows
+
+# Test and coverage
+.coverage
+.tox/
+
+# Specific libraries/tools (optional)
+# .ruff_cache/ # Ruff linter cache
+# .streamlit/secrets.toml # Streamlit secrets
+
+# Secrets and credentials (highly recommended)
+secrets.toml
+*.key
+*.pem
+
