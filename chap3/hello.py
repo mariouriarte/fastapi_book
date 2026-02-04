@@ -1,10 +1,14 @@
-from fastapi import FastAPI, Response
+from fastapi import FastAPI, Response, Body
 
 app = FastAPI()
 
 @app.get("/hi/{who}")
 def greet(who):
     return f"Hellow? {who}"
+
+@app.post("/hi")
+def greet_post(who:str = Body(embed=True)):
+    return f"Hello? {who}?"
 
 @app.get("/happy")
 def happy(status_code=200):
@@ -15,6 +19,7 @@ def header(name: str, value: str, response: Response):
     response.headers[name] = value
     response.headers['custom'] = 'header'
     return "normal body"
+
 
 
 if __name__ == "__main__":
