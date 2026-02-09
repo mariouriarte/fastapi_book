@@ -8,4 +8,4 @@ fi
 
 source venv/bin/activate
 
-pip install fastapi uvicorn httpie requests httpx pytest
+pip install fastapi uvicorn httpie requests httpx pytest mypy
