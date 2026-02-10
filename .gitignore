@@ -37,3 +37,4 @@ secrets.toml
 *.key
 *.pem
 
+.mypy_cache/
