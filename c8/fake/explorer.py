@@ -1,3 +1,4 @@
+from typing import Optional
 from model.explorer import Explorer
 # from error import Missing, Duplicate
 
@@ -28,7 +29,7 @@ def get_all() -> list[Explorer]:
     """Return all explorers"""
     return _explorers
 
-def get_one(name: str) -> Explorer|None:
+def get_one(name: str) -> Optional[Explorer]:
     for _explorer in _explorers:
         if _explorer.name == name:
             return _explorer
@@ -38,11 +39,11 @@ def create(explorer: Explorer) -> Explorer:
     """Add a explorer"""
     return explorer
 
-def modify(explorer: Explorer) -> Explorer:
+def modify(id, explorer: Explorer) -> Explorer:
     """Partially modify a explorer"""
     return explorer
 
-def replace(explorer: Explorer) -> Explorer:
+def replace(id, explorer: Explorer) -> Explorer:
     """completely replace an explorer"""
     return explorer
 

@@ -1,4 +1,5 @@
 from model.creature import Creature
+from typing import Optional
 # from error import Missing, Duplicate
 
 _creatures = [
@@ -32,7 +33,7 @@ def get_all() -> list[Creature]:
     """Return all creatures"""
     return _creatures
 
-def get_one(name: str) -> Creature|None:
+def get_one(name: str) -> Optional[Creature]:
     for _creature in _creatures:
         if _creature.name == name:
             return _creature
@@ -42,11 +43,11 @@ def create(creature: Creature) -> Creature:
     """Add a creature"""
     return creature
 
-def modify(creature: Creature) -> Creature:
+def modify(id, creature: Creature) -> Creature:
     """Partially modify a creature"""
     return creature
 
-def replace(creature: Creature) -> Creature:
+def replace(id, creature: Creature) -> Creature:
     """completely replace an creature"""
     return creature
 
