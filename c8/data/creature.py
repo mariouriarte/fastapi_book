@@ -19,7 +19,7 @@ def row_to_model(row: tuple) -> Creature:
     return Creature(name, description, country, area, aka)
 
 def model_to_dict(creature: Creature) -> dict:
-    return creature.dict()
+    return creature.model_dump()
 
 def get_one(name: str) -> Creature:
     qry = "select * from creature where name=:name"
@@ -39,7 +39,7 @@ def create(creature: Creature) -> Creature:
     curs.execute(qry, params)
     return get_one(creature.name)
 
-def modify(creature: Creature) -> Creature:
+def modify(id, creature: Creature) -> Creature:
     qry = """update creature
              set country=:country,
                  name=:name,
@@ -52,8 +52,7 @@ def modify(creature: Creature) -> Creature:
     _ = curs.execute(qry, params)
     return get_one(creature.name)
 
-def delete(creature: Creature) -> bool:
+def delete(creature: Creature) -> None:
     qry = "delete from creature where name = :name"
     params = {"name": creature.name}
     res = curs.execute(qry, params)
-    return bool(res)

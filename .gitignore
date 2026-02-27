@@ -38,3 +38,6 @@ secrets.toml
 *.pem
 
 .mypy_cache/
+
+*.db
+*.db-journal
