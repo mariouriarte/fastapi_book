@@ -23,5 +23,6 @@ source "$VENV_DIR/bin/activate"
 echo "> Upgrading pip and installing dependencies..."
 pip install --upgrade pip
 pip install fastapi uvicorn httpie requests httpx pytest mypy
+pip install python-jose[cryptography] passlib python-multipart
 
 echo "> Setup complete!"
