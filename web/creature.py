@@ -16,7 +16,6 @@ def get_all() -> list[Creature]:
 def get_one(name) -> Creature | None:
     return service.get_one(name)
 
-# all the remaining endpoints do nothing yet:
 @router.post("/")
 def create(creature: Creature) -> Creature:
     return service.create(creature)
