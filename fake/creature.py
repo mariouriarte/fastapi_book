@@ -1,8 +1,7 @@
 from model.creature import Creature
-from typing import Optional
-# from error import Missing, Duplicate
+from errors import Missing, Duplicate
 
-_creatures = [
+fakes = [
     Creature(name="Yeti",
              aka="Abominable Snowman",
              country="CN",
@@ -15,36 +14,37 @@ _creatures = [
              aka="Sasquatch"),
     ]
 
-# def find(name: str) -> Creature | None:
-#     for e in fakes:
-#         if e.name == name:
-#             return e
-#     return None
+def find(name: str) -> Creature | None:
+    for e in fakes:
+        if e.name == name:
+            return e
+    return None
 
-# def check_missing(name: str):
-#     if not find(name):
-#         raise Missing(msg=f"Missing creature {name}")
-#
-# def check_duplicate(name: str):
-#     if find(name):
-#         raise Duplicate(msg=f"Duplicate creature {name}")
+def check_missing(name: str):
+    if not find(name):
+        raise Missing(msg=f"Missing creature {name}")
+
+def check_duplicate(name: str):
+    if find(name):
+        raise Duplicate(msg=f"Duplicate creature {name}")
 
 def get_all() -> list[Creature]:
     """Return all creatures"""
-    return _creatures
+    return fakes
 
-def get_one(name: str) -> Optional[Creature]:
-    for _creature in _creatures:
-        if _creature.name == name:
-            return _creature
-    return None
-
+def get_one(name: str) -> Creature:
+    """Return one creature"""
+    check_missing(name)
+    return find(name)
+    
 def create(creature: Creature) -> Creature:
     """Add a creature"""
+    check_duplicate(creature.name)
     return creature
 
-def modify(id, creature: Creature) -> Creature:
+def modify(name: str, creature: Creature) -> Creature:
     """Partially modify a creature"""
+    check_missing(creature.name)
     return creature
 
 def replace(id, creature: Creature) -> Creature:
@@ -53,5 +53,6 @@ def replace(id, creature: Creature) -> Creature:
 
 def delete(name: str) -> None:
     """Delete a creature"""
+    check_missing(name)
     return None
 

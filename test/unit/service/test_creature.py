@@ -1,35 +1,39 @@
 import os
+os.environ["CRYPTID_UNIT_TEST"] = "true"
+from fastapi import HTTPException
 import pytest
-from model.creature import Creature
-from service import creature as code
-import data.init as init
-# os.environ["CRYPTID_SQLITE_DB"] = ":memory:"
 
-@pytest.fixture(autouse=True)
-def set_up_db():
-    """Set up an in-memory database for each test."""
-    os.environ["CRYPTID_SQLITE_DB"] = ":memory:"
-    init.get_db(reset=True) # Ensure a fresh in-memory connection
-    yield
-    # No explicit teardown needed for :memory: as it's discarded after the session
+from model.creature import Creature
+from errors import Missing, Duplicate
+
+# os.environ["CRYPTID_SQLITE_DB"] = ":memory:"
+# from data import creature as data
+from web import creature
 
 @pytest.fixture
 def sample() -> Creature:
-    return Creature(name="FUEReti", country="CN", area="Himalayas",
-        description="Harmless Himalayan",
-        aka="Abominable Snowman")
+    return Creature(name="dragon",
+        aka="firedrake",
+        country="*",
+        area="*",
+        description="Wings! Fire!")
 
-def test_obv():
-    assert 1 == 1
+@pytest.fixture
+def fakes() -> list[Creature]:
+    return creature.get_all()
 
-def test_create(sample: Creature):
-    resp = code.create(sample)
-    assert resp == sample
-#
-# def test_get_exists():
-#     resp = code.get_one("Yeti")
-#     assert resp == sample
-#
-# def test_get_missing():
-#     resp = code.get_one("boxturtle")
-#     assert resp is None
+def test_create(sample):
+    assert creature.create(sample) == sample
+
+def test_create_duplicate(fakes):
+    with pytest.raises(HTTPException) as exc:
+        _ = creature.create(fakes[0])
+        assert exc.value.status_code == 404
+
+def test_get_one(fakes):
+    assert creature.get_one(fakes[0].name) == fakes[0]
+
+def test_get_one_missing():
+    with pytest.raises(HTTPException) as exc:
+        _ = creature.get_one("bobcat")
+        assert exc.value.status_code == 404
