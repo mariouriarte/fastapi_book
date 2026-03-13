@@ -10,10 +10,7 @@ else:
 
 router = APIRouter(prefix= "/creature")
 
-# @router.get("/")
-# def top():
-#     return "top creature endpoint"
-
+@router.get("")
 @router.get("/")
 def get_all() -> list[Creature]:
     return service.get_all()
@@ -25,12 +22,13 @@ def get_one(name) -> Creature:
     except Missing as exc:
         raise HTTPException(status_code=404, detail=exc.msg)
 
-@router.post("/", status_code=201)
+@router.post("")
+@router.post("/")
 def create(creature: Creature) -> Creature:
     try:
         return service.create(creature)
     except Duplicate as exc:
-        raise HTTPException(status_code=409, detail=exc.msg)
+        raise HTTPException(status_code=404, detail=exc.msg)
 
 @router.patch("/")
 def modify(name: str, creature: Creature) -> Creature:
@@ -39,7 +37,7 @@ def modify(name: str, creature: Creature) -> Creature:
     except Missing as exc:
         raise HTTPException(status_code=404, detail=exc.msg)
 
-@router.delete("/{name}")
+@router.delete("/{name}", status_code=204)
 def delete(name: str) -> None:
     try:
         return service.delete(name)

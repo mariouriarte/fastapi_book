@@ -25,5 +25,6 @@ pip install --upgrade pip
 pip install fastapi uvicorn httpie requests httpx mypy
 pip install python-jose[cryptography] passlib python-multipart
 pip install pytest pytest-mock
+pip install hypothesis schemathesis
 
 echo "> Setup complete!"

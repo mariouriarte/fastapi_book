@@ -1,14 +1,14 @@
-from os import stat
+import os
 from fastapi import APIRouter, HTTPException
 from model.explorer import Explorer
-import service.explorer as service
 from errors import Duplicate, Missing
 
-router = APIRouter(prefix= "/explorer")
+if os.getenv("CRYPTID_UNIT_TEST"):
+    from fake import explorer as service
+else:
+    from service import explorer as service
 
-# @router.get("/")
-# def top():
-#     return "top explorer endpoint"
+router = APIRouter(prefix= "/explorer")
 
 @router.get("")
 @router.get("/")
@@ -37,10 +37,6 @@ def modify(name: str, explorer: Explorer) -> Explorer:
         return service.modify(name, explorer)
     except Missing as exc:
         raise HTTPException(status_code=404, detail=exc.msg)
-
-# @router.put("/")
-# def replace(explorer: Explorer) -> Explorer:
-#     return service.replace(1, explorer)
 
 @router.delete("/{name}", status_code=204)
 def delete(name: str):
