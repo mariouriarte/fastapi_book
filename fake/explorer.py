@@ -1,8 +1,8 @@
 from typing import Optional
 from model.explorer import Explorer
-# from error import Missing, Duplicate
+from errors import Missing, Duplicate
 
-_explorers = [
+fakes = [
     Explorer(name="Claude Hande",
              country="FR",
              description="Scarce during full moons"),
@@ -11,29 +11,28 @@ _explorers = [
              description="Myopic machete man"),
     ]
 
-# def find(name: str) -> Explorer | None:
-#     for e in fakes:
-#         if e.name == name:
-#             return e
-#     return None
+def find(name: str) -> Explorer | None:
+    for e in fakes:
+        if e.name == name:
+            return e
+    return None
 
-# def check_missing(name: str):
-#     if not find(name):
-#         raise Missing(msg=f"Missing explorer {name}")
-#
-# def check_duplicate(name: str):
-#     if find(name):
-#         raise Duplicate(msg=f"Duplicate explorer {name}")
+def check_missing(name: str):
+    if not find(name):
+        raise Missing(msg=f"Missing explorer {name}")
+
+def check_duplicate(name: str):
+    if find(name):
+        raise Duplicate(msg=f"Duplicate explorer {name}")
 
 def get_all() -> list[Explorer]:
     """Return all explorers"""
-    return _explorers
+    return fakes
 
-def get_one(name: str) -> Optional[Explorer]:
-    for _explorer in _explorers:
-        if _explorer.name == name:
-            return _explorer
-    return None
+def get_one(name: str) -> Explorer:
+    """Return one explorer"""
+    check_missing(name)
+    return find(name)
 
 def create(explorer: Explorer) -> Explorer:
     """Add a explorer"""

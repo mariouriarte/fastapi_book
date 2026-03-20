@@ -35,8 +35,8 @@ def test_modify(sample):
     assert resp == sample
 
 def test_modify_missing():
-    thing: Creature = Creature(name="snurfle", country="RU", area="",
-        description="some thing", aka="")
+    thing: Creature = Creature(name="snurfle", country="RU", area="Some area",
+        description="some thing", aka="Some thing")
     with pytest.raises(Missing):
         _ = creature.modify(thing.name, thing)
 
