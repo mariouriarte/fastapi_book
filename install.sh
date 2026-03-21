@@ -26,5 +26,6 @@ pip install fastapi uvicorn httpie requests httpx mypy
 pip install python-jose[cryptography] passlib python-multipart
 pip install pytest pytest-mock
 pip install hypothesis schemathesis locust locust-grasshopper
+pip install "uvicorn[standard]" gunicorn
 
 echo "> Setup complete!"

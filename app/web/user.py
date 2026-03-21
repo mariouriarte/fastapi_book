@@ -3,15 +3,15 @@ from datetime import timedelta
 from fastapi import APIRouter, HTTPException, Depends
 from fastapi.security import (
     OAuth2PasswordBearer, OAuth2PasswordRequestForm)
-from model.user import User
+from ..model.user import User
 
 # if os.getenv("CRYPTID_UNIT_TEST"):
 #     from fake import user as service
 # else:
 #     from service import user as service
-from errors import Missing, Duplicate
+from ..errors import Missing, Duplicate
 
-from service import user as service
+from ..service import user as service
 ACCESS_TOKEN_EXPIRE_MINUTES = 15
 
 router = APIRouter(prefix = "/user")

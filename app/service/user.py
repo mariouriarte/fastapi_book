@@ -1,12 +1,12 @@
 import datetime
 import os
 from jose import jwt
-from model.user import User
+from ..model.user import User
 
 if os.getenv("CRYPTID_UNIT_TEST"):
-    from fake import user as data
+    from ..fake import user as data
 else:
-    from data import user as data
+    from ..data import user as data
 
 from passlib.context import CryptContext
 

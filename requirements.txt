@@ -1,0 +1,16 @@
+fastapi
+uvicorn[standard]
+httpie
+requests
+httpx
+mypy
+python-jose[cryptography]
+passlib
+python-multipart
+pytest
+pytest-mock
+hypothesis
+schemathesis
+locust
+locust-grasshopper
+gunicorn
