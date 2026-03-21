@@ -14,3 +14,4 @@ services:
       - ./requirements.txt:/code/requirements.txt
     environment:
       PYTHONUNBUFFERED: 1
+      PYTHONPATH: /code/app

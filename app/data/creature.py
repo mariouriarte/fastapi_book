@@ -1,8 +1,8 @@
 from sqlite3 import IntegrityError
 
-from ..errors import Duplicate, Missing
+from errors import Duplicate, Missing
 from .init import conn, curs
-from ..model.creature import Creature
+from model.creature import Creature
 
 curs.execute("""create table if not exists creature(
                 name text primary key,
