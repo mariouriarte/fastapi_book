@@ -1,0 +1,39 @@
+name: FastAPI Book CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build the stack
+        run: make build
+
+      - name: Start the containers
+        run: make up
+
+      - name: Wait for API to be ready
+        run: |
+          timeout 60s bash -c 'until curl -s http://localhost:8000/openapi.json > /dev/null; do echo "Waiting for API..."; sleep 2; done'
+
+      - name: Run Unit Tests
+        run: make test-unit
+
+      - name: Run Schemathesis Fuzzing Tests
+        run: make test-schema-docker
+
+      - name: Show logs on failure
+        if: failure()
+        run: docker-compose logs
+
+      - name: Stop and clean up
+        if: always()
+        run: make down

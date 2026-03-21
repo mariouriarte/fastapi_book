@@ -19,7 +19,7 @@ logs: ## Muestra los logs de los contenedores
 	docker-compose logs -f
 
 test-unit: ## Ejecuta las pruebas unitarias usando fakes dentro del contenedor
-	docker-compose exec -e CRYPTID_UNIT_TEST=1 api pytest
+	docker-compose exec -T -e CRYPTID_UNIT_TEST=1 api pytest
 
 test-schema: ## Ejecuta pruebas de Schemathesis localmente
 	schemathesis run http://localhost:8000/openapi.json --checks all
