@@ -43,10 +43,6 @@ def create(explorer: Explorer) -> Explorer:
 def modify(name: str, explorer: Explorer) -> Explorer:
     """Partially modify a explorer"""
     check_missing(name)
-    for i, e in enumerate(fakes):
-        if e.name == name:
-            fakes[i] = explorer
-            return explorer
     return explorer
 
 def replace(name: str, explorer: Explorer) -> Explorer:

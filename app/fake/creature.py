@@ -44,7 +44,7 @@ def create(creature: Creature) -> Creature:
 
 def modify(name: str, creature: Creature) -> Creature:
     """Partially modify a creature"""
-    check_missing(creature.name)
+    check_missing(name)
     return creature
 
 def replace(id, creature: Creature) -> Creature:

@@ -10,8 +10,8 @@ else:
 
 router = APIRouter(prefix= "/explorer")
 
-@router.get("")
 @router.get("/")
+@router.get("")
 def get_all() -> list[Explorer]:
     return service.get_all()
 
@@ -28,11 +28,6 @@ def get_one(name: str) -> Explorer:
     except Exception:
         raise HTTPException(status_code=400, detail="Invalid request parameters")
 
-# all the remaining endpoints do nothing yet:
-@router.post("", response_model=Explorer, status_code=201, responses={
-    404: {"description": "Duplicate explorer"},
-    400: {"description": "Invalid JSON or body"}
-})
 @router.post("/", response_model=Explorer, status_code=201, responses={
     404: {"description": "Duplicate explorer"},
     400: {"description": "Invalid JSON or body"}
@@ -46,10 +41,6 @@ def create(explorer: Explorer) -> Explorer:
     except Exception:
         raise HTTPException(status_code=400, detail="Invalid request parameters")
 
-@router.patch("", response_model=Explorer, responses={
-    404: {"description": "Explorer not found"},
-    400: {"description": "Invalid JSON or body"}
-})
 @router.patch("/", response_model=Explorer, responses={
     404: {"description": "Explorer not found"},
     400: {"description": "Invalid JSON or body"}

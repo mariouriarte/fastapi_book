@@ -13,8 +13,8 @@ def create(explorer: Explorer) -> Explorer:
 # def replace(id, explorer: Explorer) -> Explorer:
 #     return data.replace(id, explorer)
 
-def modify(id, explorer: Explorer) -> Explorer:
-    return data.modify(id, explorer)
+def modify(name: str, explorer: Explorer) -> Explorer:
+    return data.modify(name, explorer)
 
 def delete(id):
     return data.delete(id)

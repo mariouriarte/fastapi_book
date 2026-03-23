@@ -10,8 +10,8 @@ else:
 
 router = APIRouter(prefix= "/creature")
 
-@router.get("")
 @router.get("/")
+@router.get("")
 def get_all() -> list[Creature]:
     return service.get_all()
 
@@ -28,10 +28,6 @@ def get_one(name: str) -> Creature:
     except Exception:
         raise HTTPException(status_code=400, detail="Invalid request parameters")
 
-@router.post("", responses={
-    404: {"description": "Duplicate creature"},
-    400: {"description": "Invalid JSON or body"}
-})
 @router.post("/", responses={
     404: {"description": "Duplicate creature"},
     400: {"description": "Invalid JSON or body"}

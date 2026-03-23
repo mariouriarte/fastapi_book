@@ -53,7 +53,7 @@ def modify(name: str, creature: Creature) -> Creature:
              aka=:aka
              where name=:name_orig"""
     params = model_to_dict(creature)
-    params["name_orig"] = creature.name
+    params["name_orig"] = name
     curs.execute(qry, params)
     conn.commit()
     if curs.rowcount == 1:

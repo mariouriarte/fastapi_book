@@ -8,7 +8,7 @@ class Explorer(BaseModel):
     model_config = {
         "json_schema_extra": {
             "example": {
-                "name": "Claude Coleman",
+                "name": "Claude",
                 "country": "US",
                 "description": "Expert in mythical creatures"
             }
