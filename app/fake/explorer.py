@@ -36,16 +36,32 @@ def get_one(name: str) -> Explorer:
 
 def create(explorer: Explorer) -> Explorer:
     """Add a explorer"""
+    check_duplicate(explorer.name)
+    fakes.append(explorer)
     return explorer
 
-def modify(id, explorer: Explorer) -> Explorer:
+def modify(name: str, explorer: Explorer) -> Explorer:
     """Partially modify a explorer"""
+    check_missing(name)
+    for i, e in enumerate(fakes):
+        if e.name == name:
+            fakes[i] = explorer
+            return explorer
     return explorer
 
-def replace(id, explorer: Explorer) -> Explorer:
+def replace(name: str, explorer: Explorer) -> Explorer:
     """completely replace an explorer"""
+    check_missing(name)
+    for i, e in enumerate(fakes):
+        if e.name == name:
+            fakes[i] = explorer
+            return explorer
     return explorer
 
 def delete(name: str) -> None:
     """Delete a explorer"""
-    return None
+    check_missing(name)
+    for i, e in enumerate(fakes):
+        if e.name == name:
+            fakes.pop(i)
+            return

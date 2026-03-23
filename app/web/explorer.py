@@ -29,29 +29,39 @@ def get_one(name: str) -> Explorer:
         raise HTTPException(status_code=400, detail="Invalid request parameters")
 
 # all the remaining endpoints do nothing yet:
-@router.post("", responses={
+@router.post("", response_model=Explorer, status_code=201, responses={
     404: {"description": "Duplicate explorer"},
     400: {"description": "Invalid JSON or body"}
 })
-@router.post("/", responses={
+@router.post("/", response_model=Explorer, status_code=201, responses={
     404: {"description": "Duplicate explorer"},
     400: {"description": "Invalid JSON or body"}
 })
 def create(explorer: Explorer) -> Explorer:
     try:
-        return service.create(explorer)
+        res = service.create(explorer)
+        return Explorer.model_validate(res)
     except Duplicate as exc:
         raise HTTPException(status_code=404, detail=exc.msg)
+    except Exception:
+        raise HTTPException(status_code=400, detail="Invalid request parameters")
 
-@router.patch("/", responses={
+@router.patch("", response_model=Explorer, responses={
+    404: {"description": "Explorer not found"},
+    400: {"description": "Invalid JSON or body"}
+})
+@router.patch("/", response_model=Explorer, responses={
     404: {"description": "Explorer not found"},
     400: {"description": "Invalid JSON or body"}
 })
 def modify(name: str, explorer: Explorer) -> Explorer:
     try:
-        return service.modify(name, explorer)
+        res = service.modify(name, explorer)
+        return Explorer.model_validate(res)
     except Missing as exc:
         raise HTTPException(status_code=404, detail=exc.msg)
+    except Exception:
+        raise HTTPException(status_code=400, detail="Invalid request parameters")
 
 @router.delete("/{name}", status_code=204, responses={
     404: {"description": "Explorer not found"},
@@ -59,7 +69,9 @@ def modify(name: str, explorer: Explorer) -> Explorer:
 })
 def delete(name: str):
     try:
-        return service.delete(name)
+        service.delete(name)
     except Missing as exc:
         raise HTTPException(status_code=404, detail=exc.msg)
+    except Exception:
+        raise HTTPException(status_code=400, detail="Invalid request parameters")
 
