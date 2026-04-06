@@ -1,7 +1,10 @@
+from os import name
+from typing import Generator
 from fastapi import File
 from fastapi import APIRouter
 from fastapi import UploadFile
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, StreamingResponse
+
 
 router = APIRouter(prefix= "/file")
 
@@ -22,3 +25,18 @@ async def download_small_file(name):
 @router.post("/big")
 async def upload_big_file(big_file: UploadFile) -> str:
     return f"file size: {big_file.size}, name: {big_file.filename}"
+
+def gen_file(path: str) -> Generator:
+    with open(file=path, mode="rb") as file:
+        yield file.read()
+
+@router.get("/big/{name}")
+async def download_big_file(name:str):
+    gen_expr = gen_file(path=name)
+    response = StreamingResponse(
+        content=gen_expr,
+        status_code=200,
+    )
+    return response
+
+
