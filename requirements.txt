@@ -17,3 +17,5 @@ gunicorn
 #torch
 #torchvision
 #transformers
+python-multipart
+aiofiles
